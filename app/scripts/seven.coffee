@@ -1,50 +1,39 @@
+Util = require('./lib/util')
+SQ = require('./lib/sequence')
+CarouselView = require('./lib/carousel')
 
-SM = require('./lib/statemachine')
+StepController = require('./step')
 
-stateMachine = new SM.StateMachine
-  startState: 'one'
-  states: [
-    new SM.State
-      name: 'pause'
-      enter: (transitionName, previousState) ->
-        console.log('pausing')
-        @transitions['resume'] = previousState
-      exit: ->
-        console.log('resuming')
-        delete @transitions['resume']
-    
-    new SM.State 
-      name: 'one'
-      transitions:
-        pause: 'pause'
-        next: 'two'
-      enter: ->
-        console.log("Entered #{@name}")
-      exit: ->
-        console.log("Exited #{@name}")
-    
-    new SM.State
-      name: 'two'
-      transitions:
-        pause: 'pause'
-        next: 'three'
-      enter: ->
-        console.log("Entered #{@name}")
-      exit: ->
-        console.log("Exited #{@name}")
-    
-    new SM.State
-      name: 'three'
-      transitions:
-        pause: 'pause'
-      enter: ->
-        console.log("Entered #{@name}")
-      exit: ->
-        console.log("Exited #{@name}")
-  ]
 
-stateMachine.start()
-stateMachine.transition('next')
-stateMachine.transition('pause')
-stateMachine.transition('resume')
-stateMachine.transition('next')
+
+pages = [
+  new StepController(name: 'one')
+  new StepController(name: 'two')
+  new StepController(name: 'three')
+]
+
+carousel = new CarouselView
+  orientation: 'y'
+  pages: pages.map (page) -> page.view
+
+stateMachine = new SQ.Sequence
+  steps: pages
+
+stateMachine.on('advanced', (step) ->
+  carousel.gotoPage(step.view)
+)
+
+
+$ ->  
+  carousel.render()
+  stateMachine.start()
+  
+  setTimeout ->
+    stateMachine.send('pause')
+  , 4500
+
+  setTimeout ->
+    stateMachine.send('resume')
+  , 6500
+
+  $('#steps').append(carousel.$el)

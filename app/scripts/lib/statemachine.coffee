@@ -1,9 +1,4 @@
-
-merge = (dest, src) ->
-  for key,value of src
-    dest[key] = value if src.hasOwnProperty(key)
-  dest
-
+merge = require('./util').merge
 
 class State 
   constructor: (options={}) ->
