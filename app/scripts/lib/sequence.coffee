@@ -1,3 +1,8 @@
+#
+# A sequence is comprised of steps. Once started it advanced through the
+# steps exiting/entering steps as it goes. Also triggers events at each
+# advance and at completion of sequence.
+#
 Util = require('./util')
 
 class Step

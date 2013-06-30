@@ -1,3 +1,8 @@
+#
+# Simple class representing a countdown timer that sends events at
+# prescribed tick intervals until complete. Also supports pausing
+# and resuming
+#
 Util = require('./util')
 Event = require('./event')
 
@@ -9,8 +14,8 @@ class Stopwatch
 		@duration = duration
 		@endTime = Date.now() + @duration
 
-		@_ticker = setInterval (() => @_tick()), @tickFrequency
-		@_complete = setTimeout (() => @_done()), duration
+		@_ticker = setInterval (=> @_tick()), @tickFrequency
+		@_complete = setTimeout (=> @_done()), duration
 
 	_tick: ->
 		timeLeft = @endTime - Date.now()
@@ -41,7 +46,9 @@ class Stopwatch
 	resume: ->
 		timeRemaining = @endTime - @_pausedTime
 		@endTime = Date.now() + timeRemaining
-		@_complete = setTimeout (() => @_done()), timeRemaining
+
+		@running = true
+		@_complete = setTimeout (=> @_done()), timeRemaining
 
 		@trigger('resumed')
 
@@ -50,7 +57,7 @@ class Stopwatch
 		@_ticker = setTimeout( =>
 			@_tick()
 			# Start regular tick intervals if still running after this fractional tick
-			@_ticker = setInterval (() => @_tick()), @tickFrequency	if @running
+			@_ticker = setInterval (=> @_tick()), @tickFrequency	if @running
 		, tickFraction)
 
 Util.merge(Stopwatch::, Event)

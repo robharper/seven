@@ -1,4 +1,7 @@
-
+#
+#	A mixin that provides jQuery-like eventing to any object using standard
+# APIs of `on`, `off`, and `trigger`
+#
 Event = 
 	on: (eventName, context, handler) ->
 		[context, handler] = [null, context] unless handler?

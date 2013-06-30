@@ -32,12 +32,14 @@ module.exports = class View
 
   ensureElement: ->
     return if @$el
-    @$el = $("<#{@tag}>").addClass(@classes.join(' '))
-    @_bind()
+    @setElement( $("<#{@tag}>").addClass(@classes.join(' ')) )
 
   _bind: ->
     for event,handler of @events
       @$el.on(event+".view-#{@id}", (evt) => @[handler](evt))
 
   _unbind: ->
-    @$el.off(".view-#{@id}")
+    @$el?.off(".view-#{@id}")
+
+  $: (selector) ->
+    if selector? then @$el.find(selector) else @$el

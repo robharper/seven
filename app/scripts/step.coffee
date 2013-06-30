@@ -1,19 +1,24 @@
+#
+# Base controller object that manages a timed step in the sequence with associated view
+#
+
 Util = require('./lib/util')
 SQ = require('./lib/sequence')
-View = require('./lib/view')
+StepView = require('./step_view')
+StepModel = require('./step_model')
 Stopwatch = require('./lib/stopwatch')
 
 class StepController extends SQ.Step
   duration: 3000
+  template: 'step'
 
   constructor: (options={}) ->
     Util.merge(@, options)
-    @model = 
+    @model = new StepModel 
       name: @name
-      timeLeft: 0
       paused: false
 
-    @view = new View(templateName: 'page', model: @model)
+    @view = new StepView(model: @model, templateName:@template, classes: ['step-view', @template])
 
     @stopwatch = new Stopwatch()
     @stopwatch.on('tick', @, @tick)
@@ -22,18 +27,14 @@ class StepController extends SQ.Step
     super(options)
 
   enter: () ->
-    @model.timeLeft = Math.round(@duration/1000)
-    @view.render()
-    @stopwatch.start(@duration)
+    @model.setTimeLeft( @duration )
+    @stopwatch.start(@duration) if @duration > 0
     
   tick: (remaining) ->
-    console.log('Time left:' + Math.round(remaining/1000))
-    @model.timeLeft = Math.round(remaining/1000)
-    @view.render()
+    @model.setTimeLeft(remaining)
 
   done: ->
-    @model.timeLeft = 0
-    @view.render()
+    @model.setTimeLeft(0)
     @advance()    
 
   resume: ->
@@ -47,6 +48,5 @@ class StepController extends SQ.Step
     @stopwatch.pause()
   
   exit: ->
-    console.log('exiting')
 
 module.exports = StepController

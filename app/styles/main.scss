@@ -1,9 +1,15 @@
-html ,body {
-  margin: 0;
-  padding: 0;
+
+@import "variables";
+@import "base";
+
+html, body {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
+
+@import "type";
+
 
 #steps {
   width: 100%;
@@ -13,11 +19,25 @@ html ,body {
 .carousel {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
+
 .carousel-slider {
   position: relative;
   width: 100%;
   height: 100%;
 
   -webkit-transition: -webkit-transform 0.5s ease;
+}
+
+.step {
+  color: white;
+  //background-color: $wet-asphalt;
+  background-color: $midnight-blue;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

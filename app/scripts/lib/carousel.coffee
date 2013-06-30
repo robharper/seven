@@ -1,3 +1,8 @@
+#
+# Basic static carousel of a fixed number of views. Once rendered `gotoPage` will
+# animate the carousel to the page/index supplied.
+#
+
 Util = require('./util')
 
 module.exports = class CarouselView extends require('./view')
