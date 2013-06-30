@@ -1,0 +1,24 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:100,400,700);
+
+body {
+  font-family: 'Lato', sans-serif;
+  line-height: 1.231;
+  
+  @media screen and (max-device-width: 320px) {
+    font-size: 1.5em;
+  }
+  @media screen and (max-device-width: 480px) {
+    font-size: 2em;
+  }
+}
+
+h1,h2,h3 {
+  text-align: center;
+  font: {
+    weight: 100;
+  }
+}
+
+.huge {
+  font-size: 4em;
+}
