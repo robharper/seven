@@ -4,6 +4,7 @@ class StepView extends View
   elements:
     timeLeft: '#time-left'
     label : '#label'
+    progress : '#progress'
 
   events:
     'click .button-run': 'run'
@@ -27,7 +28,9 @@ class StepView extends View
   renderStepChange: (oldStep, newStep) ->
     @$().removeClass("step-#{oldStep.type}") if oldStep?
     @$().addClass("step-#{newStep.type}")
+    
     @label.html( newStep.name )
+    @progress.height( "#{@sequence.percentComplete() * 100}%")
     @timeChanged( newStep )
     
   timeChanged: (step) ->

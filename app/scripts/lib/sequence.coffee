@@ -62,6 +62,9 @@ class Sequence
   currentStep: ->
     @steps[@currentIndex]
 
+  percentComplete: ->
+    @currentIndex / (@steps.length-1)
+
 # Make sequence evented
 Util.merge(Sequence::, require('./event'))
 
