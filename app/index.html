@@ -10,7 +10,6 @@
 
     <!-- build:js scripts/lib.js -->
     <script src="vendor/jquery-2.0.0.js"></script>
-    <script src="vendor/handlebars.js"></script>
     <!-- endbuild -->
 
     <!-- build:js(.tmp) scripts/main.js -->
@@ -19,32 +18,30 @@
 
   </head>
   <body>
-
-    <div id="steps">
-
+    <div id="main">
+      <div id="sidebar">
+      </div>
+      <div id="steps">
+        <header>
+        </header>
+        
+        <div id="content">
+          <h1 id="time-left" class="huge time"></h1>
+          <h2 id="label"></h2>
+        </div>
+        
+        <footer>
+          <a class="button-run button-play"><i class="icon-play"></i></a>
+          <a class="button-run button-restart"><i class="icon-refresh"></i></a>
+          <a class="button-run button-pause"><i class="icon-pause"></i></a>
+        </footer>
+      </div>
     </div>
-    
     <script>
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
       (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
       g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
       s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
-
-    <script type="x-handlebars/text" data-template-name="start">
-      <footer>
-        <h2 data-action="go">Go</h2>
-      </footer>
-    </script>
-
-    <script type="x-handlebars/text" data-template-name="step">
-      <h1 class="huge time">{{timeLeftSeconds}}</h1>
-      <h2>{{name}}</h2>
-      <footer>
-        {{#if paused}}
-          PAUSED
-        {{/if}}
-      </footer>
     </script>
 
 

@@ -1,0 +1,60 @@
+
+#steps {
+  color: white;
+  @include transition(background-color, 0.5s, linear);
+
+  &.step-start {
+    background-color: $midnight-blue;
+
+    #time-left {
+      visibility: hidden;
+    }
+    
+    .button-play {
+      display: block;
+    }
+  }
+
+  &.step-activity {
+    background-color: $wet-asphalt;
+    
+    .button-pause {
+      display: block;
+    }
+  }
+
+  &.step-rest {
+    background-color: $nephritis;
+    
+    .button-pause {
+      display: block;
+    }
+  }
+
+  &.step-done {
+    background-color: $midnight-blue;
+
+    #time-left {
+      visibility: hidden;
+    }
+
+    .button-restart {
+      display: block;
+    }
+  }
+
+
+  .button-play, .button-pause, .button-restart {
+    display: none;
+  }
+
+  &.paused {
+    background-color: $concrete;
+    .button-pause {
+      display: none;
+    }
+    .button-play {
+      display: block;
+    }
+  }
+}

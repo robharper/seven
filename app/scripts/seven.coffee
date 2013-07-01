@@ -1,44 +1,58 @@
 Util = require('./lib/util')
 SQ = require('./lib/sequence')
-CarouselView = require('./lib/carousel')
-
-StepController = require('./step')
+Step = require('./step')
+View = require('./app_view')
 
 # Define the steps/views in the sequence with a set of controllers
-pages = [
-  new StepController(template: 'start', duration: 0)
-  new StepController(name: 'one', duration: 5000)
-  new StepController(name: 'two', duration: 5000)
-  new StepController(name: 'three', duration: 5000)
-  new StepController(name: 'DONE', duration: 0)
+exercises = [
+  'jumping jacks'
+  'wall sit'
+  'pushups'
+  'crunches'
+  'chair step-up'
+  'squats'
+  'tricep dip'
+  'plank'
+  'high-knee run'
+  'lunge'
+  'pushup rotate'
+  'side plank'
 ]
 
-# Create a carousel using the controller's views
-carousel = new CarouselView
-  orientation: 'y'
-  pages: pages.map (page) -> page.view
+workDuration = 30000
+restDuration = 5000
+
+steps = [
+  new SQ.Step(
+    type: 'start'
+    name: 'READY'
+    run: ->
+      @advance()
+  )
+]
+
+for exercise in exercises
+  steps.push( new Step(name: "next: #{exercise}", duration: restDuration, type: 'rest'),
+              new Step(name: exercise, duration: workDuration, type: 'activity') )
+  
+steps.push( new SQ.Step(
+  type: 'done'
+  name: 'DONE'
+  run: ->
+    @sequence.start()
+    @advance()
+))
+
 
 # Create a sequency of steps to run in order
 stateMachine = new SQ.Sequence
-  steps: pages
+  steps: steps
 
-# On each new step, advance the carousel to the corresponding page
-stateMachine.on('advanced', (step) ->
-  carousel.gotoPage(step.view)
-)
+# View
+appView = new View(sequence: stateMachine)
 
 
 $ ->  
   # GO!
-  carousel.render()
+  appView.setElement($('#steps'))
   stateMachine.start()
-  
-  setTimeout ->
-    stateMachine.send('pause')
-  , 4500
-
-  setTimeout ->
-    stateMachine.send('resume')
-  , 6500
-
-  $('#steps').append(carousel.$el)

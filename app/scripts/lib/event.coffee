@@ -17,8 +17,16 @@ Event =
 		[context, handler] = [null, context] unless handler?
 		
 		return unless @_handlers?
+
+		# If nothing given, off everything
+		unless eventName?
+			delete @_handlers 
+			return
+
 		# If only eventName given, remove all listeners
-		delete @_handlers[eventName] unless handler?
+		unless handler?
+			delete @_handlers[eventName]
+			return
 
 		handlers = @_handlers[eventName]
 		# Nothing to do unless some handlers registered

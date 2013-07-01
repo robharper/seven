@@ -6,40 +6,35 @@ uid = 0
 
 module.exports = class View
 
-  tag: 'div'
-  classes: []
-
   constructor: (options = {}) ->
     Util.merge(@, options)
     @id = uid++
-
-  template: (context) ->
-    @_template ?= Handlebars.compile($("[data-template-name=#{@templateName}]").html())
-    @_template?(context)
-
-  context: ->
-    @model || @
-
-  render: () ->
-    @ensureElement()
-    @$el.html( @template( @context() ) )
-    @
 
   setElement: (el) ->
     @_unbind()
     @$el = $(el)
     @_bind()
-
-  ensureElement: ->
-    return if @$el
-    @setElement( $("<#{@tag}>").addClass(@classes.join(' ')) )
+    @_connectElements()
 
   _bind: ->
-    for event,handler of @events
-      @$el.on(event+".view-#{@id}", (evt) => @[handler](evt))
+    for key,value of @events
+      ((event, handler) =>
+        tokens = event.split(' ')
+        event = tokens.shift()
+        selector = tokens.join(' ')
+        @$el.on(event+".view-#{@id}", selector, (evt) => @[handler](evt))
+      )(key, value)
 
   _unbind: ->
     @$el?.off(".view-#{@id}")
+
+  _connectElements: ->
+    for name,selector of @elements
+      @[name] = @$(selector)
+
+  _disconnectElements: ->
+    for name,selector of @elements
+      @[name] = null
 
   $: (selector) ->
     if selector? then @$el.find(selector) else @$el

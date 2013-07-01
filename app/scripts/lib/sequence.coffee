@@ -4,6 +4,7 @@
 # advance and at completion of sequence.
 #
 Util = require('./util')
+Event = require('./event')
 
 class Step
   constructor: (options={}) ->
@@ -25,6 +26,7 @@ class Step
   advance: ->
     @sequence.advance()
 
+Util.merge(Step::, Event)
 
 
 class Sequence
