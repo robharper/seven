@@ -3,6 +3,11 @@
   color: white;
   @include transition(background-color, 0.5s, linear);
 
+  .button-play, .button-pause, .button-restart {
+    display: none;
+    margin: 0 12px;
+  }
+
   &.step-start {
     background-color: $midnight-blue;
 
@@ -11,7 +16,7 @@
     }
     
     .button-play {
-      display: block;
+      display: inline-block;
     }
   }
 
@@ -27,7 +32,7 @@
     background-color: $nephritis;
     
     .button-pause {
-      display: block;
+      display: inline-block;
     }
   }
 
@@ -39,13 +44,8 @@
     }
 
     .button-restart {
-      display: block;
+      display: inline-block;
     }
-  }
-
-
-  .button-play, .button-pause, .button-restart {
-    display: none;
   }
 
   &.paused {
@@ -53,8 +53,12 @@
     .button-pause {
       display: none;
     }
-    .button-play {
-      display: block;
+    .button-play, .button-restart {
+      display: inline-block;
+    }
+    .button-restart {
+      position: absolute;
+      right: 0;
     }
   }
 }

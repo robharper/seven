@@ -7,7 +7,8 @@ class StepView extends View
     progress : '#progress'
 
   events:
-    'click .button-run': 'run'
+    'click .button-play, .button-pause': 'run'
+    'click .button-restart': 'restart'
 
   constructor: (options) ->
     super(options)
@@ -38,5 +39,7 @@ class StepView extends View
 
   run: ->
     @sequence.send('run')
+  restart: ->
+    @sequence.send('restart')
 
 module.exports = StepView

@@ -1,6 +1,6 @@
-# #
-# # Base controller object that manages a timed step in the sequence with associated view
-# #
+#
+# Base controller object that manages a timed step in the sequence with associated view
+#
 
 Util = require('./lib/util')
 SQ = require('./lib/sequence')
@@ -32,6 +32,11 @@ class Step extends SQ.Step
       @pause()
     else
       @resume()
+
+  restart: ->
+    @trigger('resumed', @) unless @stopwatch.running
+    @sequence.start()
+    @sequence.advance()
 
   resume: ->
     @stopwatch.resume()
