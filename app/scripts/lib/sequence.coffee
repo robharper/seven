@@ -44,6 +44,10 @@ class Sequence
     @trigger('started')
     @transition(0)
 
+  stop: ->
+    @steps[@currentIndex]?.exit()
+    @trigger('stopped')
+
   send: (eventName, args...) ->
     @steps[@currentIndex]?.send(eventName, args...)
 
@@ -51,13 +55,14 @@ class Sequence
     @transition( @currentIndex+1 )
 
   transition: (newIndex) ->
-    @steps[@currentIndex]?.exit()
+    oldStep = @steps[@currentIndex]
+    oldStep?.exit()
     @currentIndex = newIndex
     if @steps[@currentIndex]
       @steps[@currentIndex]?.enter()
-      @trigger('advanced', @steps[@currentIndex])
+      @trigger('advanced', oldStep, @steps[@currentIndex])
     else
-      @trigger('stopped')
+      @stop()
 
   currentStep: ->
     @steps[@currentIndex]

@@ -32,16 +32,18 @@ class Stopwatch
 		@duration = null
 		@endTime = null
 
-	pause: ->
-		return unless @_ticker?
+	_halt: ->
 		@running = false
-		@_pausedTime = Date.now()
-		@trigger('paused')
-		
 		clearInterval(@_ticker)
 		@_ticker = null
 		clearTimeout(@_complete)
 		@_complete = null
+
+	pause: ->
+		return unless @running
+		@_pausedTime = Date.now()
+		@trigger('paused')
+		@_halt()
 
 	resume: ->
 		timeRemaining = @endTime - @_pausedTime
@@ -59,6 +61,11 @@ class Stopwatch
 			# Start regular tick intervals if still running after this fractional tick
 			@_ticker = setInterval (=> @_tick()), @tickFrequency	if @running
 		, tickFraction)
+
+	stop: ->
+		return unless @running
+		@trigger('stopped')
+		@_halt()
 
 Util.merge(Stopwatch::, Event)
 

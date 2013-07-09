@@ -1,50 +1,40 @@
 
 #steps {
+  background-color: $midnight-blue;
   color: white;
   @include transition(background-color, 0.5s, linear);
 
-  .button-play, .button-pause, .button-restart {
+  #time-left {
+    visibility: hidden;
+  }  
+  .button-play {
+    display: inline-block;
+  }
+
+  .button-pause, .button-restart {
     display: none;
     margin: 0 12px;
   }
 
-  &.step-start {
-    background-color: $midnight-blue;
-
-    #time-left {
-      visibility: hidden;
+  svg {
+    display: none;
+    .step-progress {
+      fill: rgba(255,255,255,0.5);
     }
-    
-    .button-play {
-      display: inline-block;
+    .sequence-progress {
+      fill: rgba(255,255,255,0.3);
     }
   }
 
-  &.step-activity {
-    background-color: $wet-asphalt;
-    
+  &.running {
+    .button-play, .button-restart {
+      display: none;
+    }
     .button-pause {
+      display: inline-block;
+    }
+    svg {
       display: block;
-    }
-  }
-
-  &.step-rest {
-    background-color: $nephritis;
-    
-    .button-pause {
-      display: inline-block;
-    }
-  }
-
-  &.step-done {
-    background-color: $midnight-blue;
-
-    #time-left {
-      visibility: hidden;
-    }
-
-    .button-restart {
-      display: inline-block;
     }
   }
 
@@ -59,6 +49,27 @@
     .button-restart {
       position: absolute;
       right: 0;
+    }
+  }
+
+  &.step-activity {
+    background-color: $wet-asphalt;
+    #time-left {
+      visibility: visible;
+    } 
+  }
+
+  &.step-rest {
+    background-color: $nephritis;
+  }
+
+  &.step-done {
+    background-color: $midnight-blue;
+    .button-pause, .button-play {
+      display: none;
+    }
+    .button-restart {
+      display: inline-block;
     }
   }
 }

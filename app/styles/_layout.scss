@@ -42,6 +42,18 @@ body, #main, #steps {
   #content {
     height: 80%;
     position: relative;
+
+    h1,h2 {
+      position: relative;
+    }
+
+    svg {
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      width: 90%;
+      height: 90%;
+    }
   }
   #progress {
     position: absolute;

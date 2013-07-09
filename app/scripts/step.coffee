@@ -33,11 +33,6 @@ class Step extends SQ.Step
     else
       @resume()
 
-  restart: ->
-    @trigger('resumed', @) unless @stopwatch.running
-    @sequence.start()
-    @sequence.advance()
-
   resume: ->
     @stopwatch.resume()
     @trigger('resumed', @)
@@ -47,6 +42,7 @@ class Step extends SQ.Step
     @trigger('paused', @)
   
   exit: ->
+    @stopwatch.stop()
 
   timeLeftSeconds: ->
     Math.round(@remaining / 1000)

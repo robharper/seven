@@ -22,14 +22,7 @@ exercises = [
 workDuration = 30000
 restDuration = 5000
 
-steps = [
-  new SQ.Step(
-    type: 'start'
-    name: 'READY'
-    run: ->
-      @advance()
-  )
-]
+steps = []
 
 for exercise in exercises
   steps.push( new Step(name: "next: #{exercise}", duration: restDuration, type: 'rest'),
@@ -38,9 +31,8 @@ for exercise in exercises
 steps.push( new SQ.Step(
   type: 'done'
   name: 'DONE'
-  run: ->
-    @sequence.start()
-    @advance()
+  enter: ->
+    @sequence.stop()
 ))
 
 
@@ -55,4 +47,4 @@ appView = new View(sequence: stateMachine)
 $ ->  
   # GO!
   appView.setElement($('#steps'))
-  stateMachine.start()
+  # stateMachine.start()
