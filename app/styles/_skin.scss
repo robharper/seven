@@ -18,11 +18,14 @@
 
   svg {
     display: none;
+    .progress-base {
+      fill: rgba(255,255,255,0.2);
+    }
     .step-progress {
-      fill: rgba(255,255,255,0.5);
+      fill: rgba(255,255,255,0.4);
     }
     .sequence-progress {
-      fill: rgba(255,255,255,0.3);
+      fill: rgba(255,255,255,0.2);
     }
   }
 
@@ -33,8 +36,29 @@
     .button-pause {
       display: inline-block;
     }
+    #time-left {
+      visibility: visible;
+    } 
     svg {
       display: block;
+    }
+  }
+
+  &.step-activity {
+    background-color: $wet-asphalt;
+  }
+
+  &.step-rest {
+    background-color: $nephritis;
+  }
+
+  &.step-done {
+    background-color: $midnight-blue;
+    .button-pause, .button-play {
+      display: none;
+    }
+    .button-restart {
+      display: inline-block;
     }
   }
 
@@ -52,26 +76,6 @@
     }
   }
 
-  &.step-activity {
-    background-color: $wet-asphalt;
-    #time-left {
-      visibility: visible;
-    } 
-  }
-
-  &.step-rest {
-    background-color: $nephritis;
-  }
-
-  &.step-done {
-    background-color: $midnight-blue;
-    .button-pause, .button-play {
-      display: none;
-    }
-    .button-restart {
-      display: inline-block;
-    }
-  }
 }
 
 

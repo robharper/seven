@@ -43,8 +43,12 @@ body, #main, #steps {
     height: 80%;
     position: relative;
 
-    h1,h2 {
-      position: relative;
+    h1 {
+      position: absolute;
+      top: 50% - 1%;  // Baseline shift
+      margin-top: -0.5em;
+      line-height: 1em;
+      width: 100%;
     }
 
     svg {
