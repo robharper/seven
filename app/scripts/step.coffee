@@ -22,7 +22,7 @@ class Step extends SQ.Step
     
   tick: (remaining) ->
     @remaining = remaining
-    @trigger('tick', @)
+    @trigger('tick', remaining)
 
   done: ->
     @advance()    
@@ -35,11 +35,11 @@ class Step extends SQ.Step
 
   resume: ->
     @stopwatch.resume()
-    @trigger('resumed', @)
+    @trigger('resumed')
 
   pause: ->
     @stopwatch.pause()
-    @trigger('paused', @)
+    @trigger('paused')
   
   exit: ->
     @stopwatch.stop()

@@ -4,32 +4,38 @@
 # advance and at completion of sequence.
 #
 Util = require('./util')
-Event = require('./event')
+Evented = require('./event')
 
-class Step
+class Step extends Evented
   constructor: (options={}) ->
     Util.merge(@, options)
 
-  enter: (transitionName) ->
+  enter: ->
 
-  exit: (transitionName) ->
+  exit: ->
 
   isCurrent: ->
     @sequence.currentState() == @
 
-  send: (eventName, args...) ->
+  receive: (eventName, args...) ->
     if typeof @[eventName] == 'function'
       @[eventName](args...)
     else
       throw new Error("Unhandled event: #{eventName}")
 
+  trigger: (args...) ->
+    # Dispatch event via parent
+    @sequence.dispatch(@, args...)
+    # ... and normal trigger via self
+    super(args...)
+
   advance: ->
     @sequence.advance()
 
-Util.merge(Step::, Event)
 
 
-class Sequence
+
+class Sequence extends Evented
   steps: null
   currentIndex: null
 
@@ -49,7 +55,10 @@ class Sequence
     @trigger('stopped')
 
   send: (eventName, args...) ->
-    @steps[@currentIndex]?.send(eventName, args...)
+    @steps[@currentIndex]?.receive(eventName, args...)
+
+  dispatch: (step, eventName, args...) ->
+    @trigger(eventName, step, args...)
 
   advance: ->
     @transition( @currentIndex+1 )
@@ -69,9 +78,6 @@ class Sequence
 
   percentComplete: ->
     @currentIndex / (@steps.length-1)
-
-# Make sequence evented
-Util.merge(Sequence::, require('./event'))
 
 
 module.exports = 

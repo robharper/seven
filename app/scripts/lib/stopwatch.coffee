@@ -4,9 +4,9 @@
 # and resuming
 #
 Util = require('./util')
-Event = require('./event')
+Evented = require('./event')
 
-class Stopwatch
+class Stopwatch extends Evented
 	tickFrequency: 1000
 
 	start: (duration) ->
@@ -66,7 +66,5 @@ class Stopwatch
 		return unless @running
 		@trigger('stopped')
 		@_halt()
-
-Util.merge(Stopwatch::, Event)
 
 module.exports = Stopwatch

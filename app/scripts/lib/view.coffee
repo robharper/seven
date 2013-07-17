@@ -11,6 +11,7 @@ module.exports = class View
     @id = uid++
 
   setElement: (el) ->
+    @_disconnectElements()
     @_unbind()
     @$el = $(el)
     @_bind()

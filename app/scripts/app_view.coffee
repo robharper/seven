@@ -20,42 +20,37 @@ class StepView extends View
       progressClasses: ['step-progress', 'sequence-progress']
     )
 
-    @sequence.on('started', () => @$().addClass('running'))
-    @sequence.on('advanced', @, @stepChanged)
+    @sequence.on('started', () => 
+      @$().addClass('running').removeClass('paused')
+    )
+    @sequence.on('advanced', @, @renderStepChange)
     @sequence.on('stopped', () => 
-      @stepChanged(@sequence.currentStep(), null)
+      @renderStepChange(@sequence.currentStep(), null)
       @$().removeClass('running')
     )
-
-  stepChanged: (oldStep, newStep) ->
-    oldStep?.off()
-
-    if newStep
-      newStep.on('tick', @, @timeChanged)
-      newStep.on('paused', () => @$().addClass('paused'))
-      newStep.on('resumed', () => @$().removeClass('paused'))
-    
-    @renderStepChange(oldStep, newStep)
+    @sequence.on('tick', @, @timeChanged)
+    @sequence.on('paused', () => @$().addClass('paused'))
+    @sequence.on('resumed', () => @$().removeClass('paused'))
 
   setElement: (el) ->
     super(el)
     @progress.setElement(@svg)
 
   renderStepChange: (oldStep, newStep) ->
-    @$().removeClass('paused')
     @$().removeClass("step-#{oldStep.type}") if oldStep?
     if newStep?
       @$().addClass("step-#{newStep.type}")
       @label.html( newStep.name )
       @timeChanged( newStep )
     
-  timeChanged: (step) ->
+  timeChanged: (step, remaining=step.duration) ->
     return unless step.duration > 0
 
     @timeLeft.html( step.timeLeftSeconds?() )
 
+    # Update progress -> animate to next step over 1 sec
     @progress.update([
-      (step.duration-step.remaining)/step.duration
+      (step.duration-remaining+1000)/step.duration
       @sequence.percentComplete()
     ])
 
