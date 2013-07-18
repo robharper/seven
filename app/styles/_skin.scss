@@ -1,20 +1,14 @@
+body {
+  background-color: #333;
+}
 
 #steps {
   background-color: $midnight-blue;
   color: white;
-  @include transition(background-color, 0.5s, linear);
 
   #time-left {
     visibility: hidden;
   }  
-  .button-play {
-    display: inline-block;
-  }
-
-  .button-pause, .button-restart {
-    display: none;
-    margin: 0 12px;
-  }
 
   svg {
     display: none;
@@ -30,12 +24,6 @@
   }
 
   &.running {
-    .button-play, .button-restart {
-      display: none;
-    }
-    .button-pause {
-      display: inline-block;
-    }
     #time-left {
       visibility: visible;
     } 
@@ -53,32 +41,11 @@
   }
 
   &.step-done {
-    background-color: $midnight-blue;
-    .button-pause, .button-play {
-      display: none;
-    }
-    .button-restart {
-      display: inline-block;
-    }
+    background-color: $emerland;
   }
 
   &.paused {
     background-color: $concrete;
-    .button-pause {
-      display: none;
-    }
-    .button-play, .button-restart {
-      display: inline-block;
-    }
-    .button-restart {
-      position: absolute;
-      right: 0;
-    }
   }
 
-}
-
-
-#progress {
-  background-color: rgba(255, 255, 255, 0.1);
 }

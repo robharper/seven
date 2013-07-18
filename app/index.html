@@ -20,26 +20,24 @@
   </head>
   <body>
     <div id="main">
+      
       <div id="sidebar">
-      </div>
-      <div id="steps">
-        <header>
-          <h2 id="label">READY</h2>
-        </header>
-        
-        <div id="content">
-          <svg></svg>
-          <h1 id="time-left" class="huge time"></h1>
-        </div>
-        
-        <footer>
+        <div class="controls">
           <a class="button button-play"><i class="icon-play"></i></a>
           <a class="button button-restart"><i class="icon-refresh"></i></a>
-          <a class="button button-pause"><i class="icon-pause"></i></a>
-        </footer>
-
-        <div id="progress"></div>
+        </div>
       </div>
+
+      <div id="steps">
+        <svg></svg>
+        <h1 id="time-left" class="huge time"></h1>
+
+        <div class="info">
+          <h2 id="label">READY</h2>
+          <p id="sub-label">Tap to begin</p>
+        </div>
+      </div>
+    
     </div>
     <script>
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

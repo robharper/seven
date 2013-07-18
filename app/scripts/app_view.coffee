@@ -5,11 +5,11 @@ class StepView extends View
   elements:
     timeLeft: '#time-left'
     label : '#label'
+    sublabel : '#sub-label'
     svg : 'svg'
 
   events:
-    'click .button-play, .button-pause': 'run'
-    'click .button-restart': 'restart'
+    'click': 'run'
 
   constructor: (options) ->
     super(options)
@@ -21,11 +21,12 @@ class StepView extends View
     )
 
     @sequence.on('started', () => 
-      @$().addClass('running').removeClass('paused')
+      @running = true
+      @$().addClass('running').removeClass('paused', 'step-done')
     )
     @sequence.on('advanced', @, @renderStepChange)
     @sequence.on('stopped', () => 
-      @renderStepChange(@sequence.currentStep(), null)
+      @running = false
       @$().removeClass('running')
     )
     @sequence.on('tick', @, @timeChanged)
@@ -41,6 +42,7 @@ class StepView extends View
     if newStep?
       @$().addClass("step-#{newStep.type}")
       @label.html( newStep.name )
+      @sublabel.html( newStep.description )
       @timeChanged( newStep )
     
   timeChanged: (step, remaining=step.duration) ->
@@ -55,13 +57,9 @@ class StepView extends View
     ])
 
   run: ->
-    if @sequence.currentStep()?
+    if @running
       @sequence.send('run')
     else
       @sequence.start()
-
-  restart: ->
-    @sequence.stop()
-    @sequence.start()
 
 module.exports = StepView
