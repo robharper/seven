@@ -8,20 +8,20 @@ Sidebar = require('./sidebar_view')
 exercises = [
   'jumping jacks'
   'wall sit'
-  # 'pushups'
-  # 'crunches'
-  # 'chair step-up'
-  # 'squats'
-  # 'tricep dip'
-  # 'plank'
-  # 'high-knee run'
-  # 'lunge'
-  # 'pushup rotate'
-  # 'side plank'
+  'pushups'
+  'crunches'
+  'chair step-up'
+  'squats'
+  'tricep dip'
+  'plank'
+  'high-knee run'
+  'lunge'
+  'pushup rotate'
+  'side plank'
 ]
 
-workDuration = 3000
-restDuration = 2000
+workDuration = 30000
+restDuration = 5000
 
 steps = []
 
