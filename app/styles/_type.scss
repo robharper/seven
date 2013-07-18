@@ -3,12 +3,11 @@
 body {
   font-family: 'Lato', sans-serif;
   line-height: 1.231;
+
+  font-size: 2em;
   
   @media screen and (max-device-width: 320px) {
     font-size: 1.5em;
-  }
-  @media screen and (max-device-width: 480px) {
-    font-size: 2em;
   }
 }
 
