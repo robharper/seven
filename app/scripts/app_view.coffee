@@ -20,15 +20,9 @@ class StepView extends View
       progressClasses: ['step-progress', 'sequence-progress']
     )
 
-    @sequence.on('started', () => 
-      @running = true
-      @$().addClass('running').removeClass('paused', 'step-done')
-    )
+    @sequence.on('started', () => @$().addClass('running').removeClass('paused', 'step-done') )
     @sequence.on('advanced', @, @renderStepChange)
-    @sequence.on('stopped', () => 
-      @running = false
-      @$().removeClass('running')
-    )
+    @sequence.on('stopped', () => @$().removeClass('running') )
     @sequence.on('tick', @, @timeChanged)
     @sequence.on('paused', () => @$().addClass('paused'))
     @sequence.on('resumed', () => @$().removeClass('paused'))
@@ -57,7 +51,7 @@ class StepView extends View
     ])
 
   run: ->
-    if @running
+    if @sequence.running
       @sequence.send('run')
     else
       @sequence.start()

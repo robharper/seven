@@ -47,12 +47,14 @@ class Sequence extends Evented
     @steps = steps
 
   start: (startState) ->
+    @running = true
     @trigger('started')
     @transition(0)
 
   stop: ->
     @steps[@currentIndex]?.exit()
     @trigger('stopped')
+    @running = false
 
   send: (eventName, args...) ->
     @steps[@currentIndex]?.receive(eventName, args...)
