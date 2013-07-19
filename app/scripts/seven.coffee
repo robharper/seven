@@ -52,7 +52,12 @@ $ ->
   appView.setElement($('#steps'))
   sidebarView.setElement($('#sidebar'))
 
-  centerAll = () ->
+  updateStyle = () ->
+    if window.innerWidth/window.innerHeight > 0.7
+      $('body').addClass('wide').removeClass('tall')
+    else
+      $('body').addClass('tall').removeClass('wide')
+
     $('[data-square]').each (index, el) ->
       el = $(el)
       parent = el.parent()
@@ -63,10 +68,7 @@ $ ->
         'width': size
         'height': size
   
-  $(window).on 'resize', centerAll
-  centerAll()
+  $(window).on 'resize', updateStyle
+  updateStyle()
 
   $('body').addClass('ready')
-    
-
-  # stateMachine.start()

@@ -93,7 +93,7 @@ body.ready #main {
   }
 }
 
-@media screen and (orientation: portrait) {
+body.tall {
   #steps {
     .info {
       #label {
@@ -108,7 +108,7 @@ body.ready #main {
 
 
 // TODO create fn for these calcs
-@media screen and (orientation: landscape) {
+body.wide {
   #steps {
     .info {
       #label {
