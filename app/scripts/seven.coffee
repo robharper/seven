@@ -52,4 +52,21 @@ $ ->
   appView.setElement($('#steps'))
   sidebarView.setElement($('#sidebar'))
 
+  centerAll = () ->
+    $('[data-square]').each (index, el) ->
+      el = $(el)
+      parent = el.parent()
+      size = Math.min(parent.innerWidth(), parent.innerHeight())
+      el.css
+        'margin-left': -size/2
+        'margin-top': -size/2
+        'width': size
+        'height': size
+  
+  $(window).on 'resize', centerAll
+  centerAll()
+
+  $('body').addClass('ready')
+    
+
   # stateMachine.start()
