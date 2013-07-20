@@ -10,6 +10,7 @@ body {
 #steps {
   background-color: $midnight-blue;
   color: white;
+  @include box-shadow(0 0 8px 1px rgba(0,0,0,0.3));
 
   .content {
     visibility: hidden;
