@@ -11,12 +11,11 @@ body {
   background-color: $midnight-blue;
   color: white;
 
-  #time-left {
+  .content {
     visibility: hidden;
   }  
 
   svg {
-    display: none;
     .progress-base {
       fill: rgba(255,255,255,0.2);
     }
@@ -29,11 +28,8 @@ body {
   }
 
   &.running {
-    #time-left {
+    .content {
       visibility: visible;
-    } 
-    svg {
-      display: block;
     }
   }
 

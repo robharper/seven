@@ -46,29 +46,31 @@ stateMachine = new SQ.Sequence
 appView = new View(sequence: stateMachine)
 sidebarView = new Sidebar(sequence: stateMachine)
 
+# Javascript css-ish calculations:
+updateStyle = () ->
+  if window.innerWidth/window.innerHeight > 0.7
+    $('body').addClass('wide').removeClass('tall')
+  else
+    $('body').addClass('tall').removeClass('wide')
+
+  $('[data-square]').each (index, el) ->
+    el = $(el)
+    parent = el.parent()
+    size = Math.min(parent.innerWidth(), parent.innerHeight())
+    el.css
+      'margin-left': -size/2
+      'margin-top': -size/2
+      'width': size
+      'height': size
+
+$(window).on 'resize', updateStyle
+
 
 $ ->  
+  updateStyle()
+
   # GO!
   appView.setElement($('#steps'))
   sidebarView.setElement($('#sidebar'))
-
-  updateStyle = () ->
-    if window.innerWidth/window.innerHeight > 0.7
-      $('body').addClass('wide').removeClass('tall')
-    else
-      $('body').addClass('tall').removeClass('wide')
-
-    $('[data-square]').each (index, el) ->
-      el = $(el)
-      parent = el.parent()
-      size = Math.min(parent.innerWidth(), parent.innerHeight())
-      el.css
-        'margin-left': -size/2
-        'margin-top': -size/2
-        'width': size
-        'height': size
-  
-  $(window).on 'resize', updateStyle
-  updateStyle()
 
   $('body').addClass('ready')

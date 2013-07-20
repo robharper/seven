@@ -7,7 +7,7 @@ class ProgressView extends View
   setElement: (el) ->
     super(el)
     @createVis()
-    
+
     # Quick and dirty rebuild of vis on canvas size change
     $(window).on('resize', () =>
       @$el.empty()
@@ -15,8 +15,8 @@ class ProgressView extends View
     )
 
   createVis: ->
-    w = @$().width()
-    h = @$().height()
+    w = @$().innerWidth()
+    h = @$().innerHeight()
     r = Math.min(w, h)/2
 
     @lastValues = [1..@seriesCount].map -> 0
